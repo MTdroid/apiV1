@@ -1,8 +1,8 @@
-package ru.kata.models.AdminUserRestController.editUserById;
+package ru.kata.models.adminUserRestController.editUserById;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import ru.kata.entity.RoleTable;
+import ru.kata.entity.adminUserRestController.RoleTable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class EditUserResponse {
@@ -12,10 +12,10 @@ public class EditUserResponse {
     private String firstName;
     private String lastName;
     private String birthday;
-    private boolean enabled;
+    private Boolean enabled;
     private RoleTable role;
-    private boolean imageFromSlack;
-    private boolean isViewReport;
+    private Boolean imageFromSlack;
+    private Boolean isViewReport;
     private String avatarUrl;
     private Object inactivation;
 }

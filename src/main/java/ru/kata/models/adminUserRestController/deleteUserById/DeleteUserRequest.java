@@ -1,4 +1,4 @@
-package ru.kata.models.AdminUserRestController.deleteUserById;
+package ru.kata.models.adminUserRestController.deleteUserById;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -7,5 +7,5 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DeleteUserRequest {
 
-    private String id;
+    private Integer id;
 }

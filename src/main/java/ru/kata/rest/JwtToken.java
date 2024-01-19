@@ -10,7 +10,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JwtToken {
 
-    String login;
+    String username;
     String password;
     Boolean rememberMe;
 }

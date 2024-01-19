@@ -1,12 +1,13 @@
+package adminUserRestController;
+
 import io.qameta.allure.Epic;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.kata.entity.UserTable;
-import ru.kata.repositoryClasses.UserRepository;
-import ru.kata.steps.DbCheck;
+import ru.kata.entity.adminUserRestController.UserTable;
+import ru.kata.repositoryClasses.adminUserRestController.UserRepository;
+import ru.kata.steps.adminUserRestController.DbCheck;
 
-import java.awt.print.Book;
 import java.util.List;
 
 public class db {

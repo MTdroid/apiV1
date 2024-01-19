@@ -1,15 +1,13 @@
-package ru.kata.models.AdminUserRestController.getUserById;
+package ru.kata.models.adminUserRestController.getUserById;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import ru.kata.entity.RoleTable;
-import ru.kata.entity.UserTable;
+import lombok.EqualsAndHashCode;
+import ru.kata.entity.adminUserRestController.RoleTable;
 
-import javax.management.relation.Role;
-import javax.xml.bind.annotation.XmlElement;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
+@EqualsAndHashCode
 public class GetUserResponse {
 
     private int id;

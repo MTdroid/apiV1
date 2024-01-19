@@ -1,7 +1,6 @@
 package ru.kata.rest;
 
 
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -9,15 +8,15 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import ru.kata.entity.RoleTable;
-import ru.kata.entity.UserTable;
-import ru.kata.models.AdminUserRestController.addUser.AddUserRequest;
-import ru.kata.models.AdminUserRestController.addUser.AddUserResponse;
-import ru.kata.models.AdminUserRestController.deleteUserById.DeleteUserResponse;
-import ru.kata.models.AdminUserRestController.editUserById.EditUserRequest;
-import ru.kata.models.AdminUserRestController.editUserById.EditUserResponse;
-import ru.kata.models.AdminUserRestController.getAllCurators.GetAllCuratorsResponse;
-import ru.kata.models.AdminUserRestController.getUserById.GetUserResponse;
+import ru.kata.entity.adminUserRestController.Inactivation;
+import ru.kata.entity.adminUserRestController.RoleTable;
+import ru.kata.models.adminUserRestController.addUser.AddUserRequest;
+import ru.kata.models.adminUserRestController.addUser.AddUserResponse;
+import ru.kata.models.adminUserRestController.deleteUserById.DeleteUserResponse;
+import ru.kata.models.adminUserRestController.getAllCurators.GetAllCuratorsResponse;
+import ru.kata.rest.token.Root;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -29,27 +28,32 @@ public class PositiveRequestSpecification {
 
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
-                .setBaseUri("https://admin-aqaj.kata.academy")
+                .setBaseUri("https://admin-aqaj.kata.academy/")
                 .addFilter(new RequestLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())
-                .build().header("Authorization","Bearer " +"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjFAbWFpbC5ydSIsInNjb3BlcyI6IkFETUlOIiwiaWF0IjoxNzA1NTgwMDc2LCJleHAiOjE3MDU1OTgwNzZ9.cJcodXSUlfylinlHAuxVm4wnJ5Z9GGedKieRavrk6nE");
+                .build().header("Authorization","Bearer " +setToken().getData().getToken());
 
     }
-    public static String setToken() {
+
+    public static Root setToken() {
         JwtToken jwtToken = new JwtToken("admin1@mail.ru","admin", false);
         return given().contentType(ContentType.JSON)
                 .body(jwtToken)
                 .when()
-                .get(Endpoint.getJwtToken)
-                .then()
-                .extract().jsonPath().get("jwtToken");
+                .post(Endpoint.getJwtToken)
+                .then().log().all()
+                .extract().as(Root.class);
     }
+
+
     public static ResponseSpecification statusCode(Integer code) {
         ResponseSpecBuilder builder = new ResponseSpecBuilder()
                 .expectStatusCode(code);
         return builder.build();
     }
-    public static GetUserResponse getUserResponse(Integer userId, Integer code) {
+
+
+    public static AddUserResponse getUserResponse(Integer userId, Integer code) {
 
         return given()
                 .spec(requestSpecification())
@@ -58,7 +62,7 @@ public class PositiveRequestSpecification {
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
-                .extract().as(GetUserResponse.class);
+                .extract().body().jsonPath().getObject("data",AddUserResponse.class);
 
     }
 
@@ -75,8 +79,8 @@ public class PositiveRequestSpecification {
 
     }
 
-    public static AddUserResponse addUserResponse(String birthday, String email, String firstName, String lastName, String password,RoleTable role, Integer code) {
-        AddUserRequest user = new AddUserRequest(birthday,email,firstName,lastName,password, role);
+    public static AddUserResponse addUserResponse(Integer id, String email, String password, String firstName , String lastName  , String birthday , Boolean enabled , RoleTable role , Boolean imageFromSlack , Boolean isViewReport , String avatarUrl , Inactivation inactivation, Integer code) {
+        AddUserRequest user = new AddUserRequest( id,  email,  password, firstName , lastName  , birthday , enabled, role , imageFromSlack , isViewReport , avatarUrl, inactivation);
         return given()
                 .spec(requestSpecification())
                 .body(user)
@@ -85,10 +89,11 @@ public class PositiveRequestSpecification {
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
-                .extract().as(AddUserResponse.class);
+                .extract().body().jsonPath().getObject("data",AddUserResponse.class);
     }
-    public static EditUserResponse editUserResponse(Long id, String email,String password,  String firstName, String lastName, String birthday,  RoleTable role, Integer code) {
-        EditUserRequest user = new EditUserRequest(id,email,password,firstName,lastName,birthday, role);
+
+    public static AddUserResponse editUserResponse(Integer id, String email, String password, String firstName , String lastName  , String birthday , Boolean enabled , RoleTable role , Boolean imageFromSlack , Boolean isViewReport , String avatarUrl , Inactivation inactivation, Integer code) {
+        AddUserRequest user = new AddUserRequest( id,  email,  password, firstName , lastName  , birthday , enabled, role , imageFromSlack , isViewReport , avatarUrl, inactivation);
         return given()
                 .spec(requestSpecification())
                 .body(user)
@@ -97,9 +102,11 @@ public class PositiveRequestSpecification {
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
-                .extract().as(EditUserResponse.class);
+                .extract().body().jsonPath().getObject("data",AddUserResponse.class);
     }
-    public static GetAllCuratorsResponse getAllCuratorsResponse(Integer code) {
+
+
+    public static List<GetAllCuratorsResponse> getAllCuratorsResponse(Integer code) {
 
         return given()
                 .spec(requestSpecification())
@@ -108,42 +115,10 @@ public class PositiveRequestSpecification {
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
-                .extract().as(GetAllCuratorsResponse.class);
+                .extract().body().jsonPath().getList("data",GetAllCuratorsResponse.class);
 
     }
 
-
-/*
-
-
-    public static List<AuthorGetAllBooksXMLResponse> authorGetAllBooksXMLResponse(int authorId, Integer code) {
-        AuthorGetAllBooksXMLRequest author = new AuthorGetAllBooksXMLRequest();
-        author.setId(authorId);
-
-        return given()
-                .spec(requestSpecificationXML())
-                .body(author)
-                .when()
-                .post(Endpoint.authorGetAllBooksXML)
-                .then()
-                .assertThat()
-                .spec(statusCode(code))
-                .extract().xmlPath().getList("", AuthorGetAllBooksXMLResponse.class);
-    }
-
-    public static BooksSaveResponse booksSaveResponse(String bookTitle, Long authorId, Integer code) {
-        AuthorForBookSave author = new AuthorForBookSave(authorId);
-        BooksSaveRequest book = new BooksSaveRequest(bookTitle, author);
-        return given()
-                .spec(requestSpecification())
-                .body(book)
-                .when()
-                .post(Endpoint.booksSave)
-                .then()
-                .assertThat()
-                .spec(statusCode(code))
-                .extract().as(BooksSaveResponse.class);
-    }*/
 }
 
 

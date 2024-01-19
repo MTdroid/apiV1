@@ -1,9 +1,9 @@
-package ru.kata.models.AdminUserRestController.editUserById;
+package ru.kata.models.adminUserRestController.editUserById;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.kata.entity.RoleTable;
+import ru.kata.entity.adminUserRestController.RoleTable;
 @Data
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

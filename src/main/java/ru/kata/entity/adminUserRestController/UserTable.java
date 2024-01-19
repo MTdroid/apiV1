@@ -1,4 +1,4 @@
-package ru.kata.entity;
+package ru.kata.entity.adminUserRestController;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.Date;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
@@ -46,24 +47,4 @@ public class UserTable {
 
     private String lastName;
 
-    @Column(name = "role_id")
-    @XmlElement(name = "role_id", required = true)
-
-
-
-   /* private boolean imageFromSlack;
-    private boolean isViewReport;
-    private String avatarUrl;
-    private String inactivation;
-
-    private String password;*/
-
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
-    }
 }

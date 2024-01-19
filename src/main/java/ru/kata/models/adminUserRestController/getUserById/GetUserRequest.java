@@ -1,4 +1,4 @@
-package ru.kata.models.AdminUserRestController.getUserById;
+package ru.kata.models.adminUserRestController.getUserById;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

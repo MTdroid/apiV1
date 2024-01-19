@@ -1,5 +1,6 @@
+/*
 import org.hibernate.Session;
-import ru.kata.entity.UserTable;
+import ru.kata.entity.adminUserRestController.UserTable;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,3 +27,4 @@ public class Main {
     }
 }
 
+*/

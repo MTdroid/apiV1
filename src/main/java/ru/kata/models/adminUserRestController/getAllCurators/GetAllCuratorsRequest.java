@@ -1,4 +1,4 @@
-package ru.kata.models.AdminUserRestController.getAllCurators;
+package ru.kata.models.adminUserRestController.getAllCurators;
 
 
 import lombok.Data;

@@ -1,10 +1,9 @@
-package ru.kata.steps;
+package ru.kata.steps.adminUserRestController;
 
 import org.assertj.core.api.Assertions;
-import ru.kata.entity.RoleTable;
-import ru.kata.entity.UserTable;
-import ru.kata.models.AdminUserRestController.deleteUserById.DeleteUserResponse;
-import ru.kata.repositoryClasses.UserRepository;
+import ru.kata.entity.adminUserRestController.UserTable;
+import ru.kata.models.adminUserRestController.deleteUserById.DeleteUserResponse;
+import ru.kata.repositoryClasses.adminUserRestController.UserRepository;
 
 import java.util.List;
 

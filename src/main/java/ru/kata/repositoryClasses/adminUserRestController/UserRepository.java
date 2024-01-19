@@ -1,13 +1,11 @@
-package ru.kata.repositoryClasses;
+package ru.kata.repositoryClasses.adminUserRestController;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
-import ru.kata.entity.RoleTable;
-import ru.kata.entity.UserTable;
-import ru.kata.models.AdminUserRestController.deleteUserById.DeleteUserResponse;
+import ru.kata.entity.adminUserRestController.UserTable;
+import ru.kata.models.adminUserRestController.deleteUserById.DeleteUserResponse;
 
-import java.awt.print.Book;
 import java.util.List;
 
 import static ru.kata.environments.UserDatabaseConfiguration.getSession;
