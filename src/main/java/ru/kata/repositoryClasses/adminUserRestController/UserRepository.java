@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import ru.kata.entity.adminUserRestController.UserTable;
-import ru.kata.models.adminUserRestController.deleteUserById.DeleteUserResponse;
+import ru.kata.models.response.DeleteUserResponse;
 
 import java.util.List;
 
@@ -38,6 +38,13 @@ public class UserRepository {
         return session.createNativeQuery(hql, UserTable.class).setParameter("id",id).getResultList();
 
     }
+    public static List<UserTable> findUserByEmail(String email) {
+        final String hql = """
+           SELECT * FROM users WHERE email =:email
+           """;
+        return session.createNativeQuery(hql, UserTable.class).setParameter("email",email).getResultList();
+
+    }
 
     public static List<DeleteUserResponse> deleteUser(Integer id) {
         final String hql = """
@@ -57,22 +64,32 @@ public class UserRepository {
         tr.commit();
 
     }
-    public static void addUser(String birthday, String email, String firstName, String lastName, String password, String role) {
-        final String hql = """
-                INSERT INTO users (birthday, email, first_name, last_name, password,dtype)
-                VALUES($birthday,$email, $firstName, $lastName, $password,$dtype)
-                """;
+    public static void deleteAllCurators(String dtype) {
+
+        final String hql = "DELETE FROM users WHERE dtype =:dtype" ;
 
         Transaction tr = session.beginTransaction();
-        NativeQuery<UserTable> query = session.createNativeQuery(hql, UserTable.class);
-        query.setParameter("birthday", birthday);
-        query.setParameter("email", email);
-        query.setParameter("first_name", firstName);
-        query.setParameter("last_name", lastName);
-        query.setParameter("password", password);
-        query.setParameter("dtype", role);
-        query.executeUpdate();
+
+        session.createNativeQuery(hql, UserTable.class).setParameter("dtype",dtype).executeUpdate();
         tr.commit();
+
+    }
+    public static List<UserTable> addUser(String birthday, String email, String firstName, String lastName, String password, String dtype) {
+
+        final String hql = """
+                INSERT INTO users (birthday, email, first_name, last_name, password)
+                VALUES(:birthday,:email, :firstName, :lastName, :password)
+                """;
+
+
+       return session.createNativeQuery(hql,UserTable.class)
+                .setParameter("birthday", birthday)
+        .setParameter("email", email)
+        .setParameter("first_name", firstName)
+        .setParameter("last_name", lastName)
+        .setParameter("password", password)
+        .setParameter("dtype", dtype)
+        .getResultList();
     }
 
 /*    public List<Book> findBook(String bookTitle) {

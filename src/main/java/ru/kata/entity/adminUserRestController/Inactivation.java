@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Inactivation {
-    public Boolean inactive;
-    public String reason;
+    public Boolean inactive = true;
+    public String reason = "NEED_CHANGE_PASSWORD";
 }

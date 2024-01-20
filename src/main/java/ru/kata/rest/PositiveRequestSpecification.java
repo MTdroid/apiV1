@@ -10,10 +10,11 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import ru.kata.entity.adminUserRestController.Inactivation;
 import ru.kata.entity.adminUserRestController.RoleTable;
-import ru.kata.models.adminUserRestController.addUser.AddUserRequest;
-import ru.kata.models.adminUserRestController.addUser.AddUserResponse;
-import ru.kata.models.adminUserRestController.deleteUserById.DeleteUserResponse;
-import ru.kata.models.adminUserRestController.getAllCurators.GetAllCuratorsResponse;
+import ru.kata.models.request.AddUserRequest;
+import ru.kata.models.response.GetAddEditUserResponse;
+import ru.kata.models.response.DeleteUserResponse;
+import ru.kata.models.response.GetAllCuratorsResponse;
+import ru.kata.rest.token.JwtToken;
 import ru.kata.rest.token.Root;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class PositiveRequestSpecification {
     }
 
 
-    public static AddUserResponse getUserResponse(Integer userId, Integer code) {
+    public static GetAddEditUserResponse getUserResponse(Integer userId, Integer code) {
 
         return given()
                 .spec(requestSpecification())
@@ -62,7 +63,7 @@ public class PositiveRequestSpecification {
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
-                .extract().body().jsonPath().getObject("data",AddUserResponse.class);
+                .extract().body().jsonPath().getObject("data", GetAddEditUserResponse.class);
 
     }
 
@@ -71,7 +72,7 @@ public class PositiveRequestSpecification {
         return given()
                 .spec(requestSpecification())
                 .when()
-                .delete(Endpoint.getUser, userId)
+                .delete(Endpoint.deleteUser, userId)
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
@@ -79,8 +80,8 @@ public class PositiveRequestSpecification {
 
     }
 
-    public static AddUserResponse addUserResponse(Integer id, String email, String password, String firstName , String lastName  , String birthday , Boolean enabled , RoleTable role , Boolean imageFromSlack , Boolean isViewReport , String avatarUrl , Inactivation inactivation, Integer code) {
-        AddUserRequest user = new AddUserRequest( id,  email,  password, firstName , lastName  , birthday , enabled, role , imageFromSlack , isViewReport , avatarUrl, inactivation);
+    public static GetAddEditUserResponse addUserResponse(String avatarUrl, String birthday, String email, Boolean enabled , String firstName, Integer id, Boolean imageFromSlack, Inactivation inactivation, Boolean isViewReport , String lastName, String password, RoleTable role   , Integer code) {
+        AddUserRequest user = new AddUserRequest(avatarUrl,birthday,email,enabled,firstName,id,imageFromSlack,inactivation,isViewReport,lastName,password,role);
         return given()
                 .spec(requestSpecification())
                 .body(user)
@@ -89,11 +90,11 @@ public class PositiveRequestSpecification {
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
-                .extract().body().jsonPath().getObject("data",AddUserResponse.class);
+                .extract().body().jsonPath().getObject("data", GetAddEditUserResponse.class);
     }
 
-    public static AddUserResponse editUserResponse(Integer id, String email, String password, String firstName , String lastName  , String birthday , Boolean enabled , RoleTable role , Boolean imageFromSlack , Boolean isViewReport , String avatarUrl , Inactivation inactivation, Integer code) {
-        AddUserRequest user = new AddUserRequest( id,  email,  password, firstName , lastName  , birthday , enabled, role , imageFromSlack , isViewReport , avatarUrl, inactivation);
+    public static GetAddEditUserResponse editUserResponse(Integer id, String email, String password, String firstName , String lastName  , String birthday , Boolean enabled , RoleTable role , Boolean imageFromSlack , Boolean isViewReport , String avatarUrl , Inactivation inactivation, Integer code) {
+        AddUserRequest user = new AddUserRequest(avatarUrl,birthday,email,enabled,firstName,id,imageFromSlack,inactivation,isViewReport,lastName,password,role);
         return given()
                 .spec(requestSpecification())
                 .body(user)
@@ -102,7 +103,7 @@ public class PositiveRequestSpecification {
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
-                .extract().body().jsonPath().getObject("data",AddUserResponse.class);
+                .extract().body().jsonPath().getObject("data", GetAddEditUserResponse.class);
     }
 
 
@@ -115,7 +116,7 @@ public class PositiveRequestSpecification {
                 .then()
                 .assertThat()
                 .spec(statusCode(code))
-                .extract().body().jsonPath().getList("data",GetAllCuratorsResponse.class);
+                .extract().body().jsonPath().getList("data", GetAllCuratorsResponse.class);
 
     }
 

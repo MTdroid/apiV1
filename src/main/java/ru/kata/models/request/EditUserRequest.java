@@ -1,4 +1,4 @@
-package ru.kata.models.adminUserRestController.editUserById;
+package ru.kata.models.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -14,13 +14,5 @@ public class EditUserRequest {
     private String firstName;
     private String lastName;
     private String birthday;
-
     private RoleTable role;
-
-    /*private boolean enabled;
-
-    private boolean imageFromSlack;
-    private boolean isViewReport;
-    private String avatarUrl;
-    private Object inactivation;*/
 }

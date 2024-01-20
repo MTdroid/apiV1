@@ -6,8 +6,7 @@ import java.util.Date;
 
 public class TestDataGenerator {
 
-    public static String generateData() {
-        int length = 10;
+    public static String generateData(int length) {
         boolean useLetters = true;
         boolean useNumbers = false;
         String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);

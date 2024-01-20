@@ -47,4 +47,15 @@ public class UserTable {
 
     private String lastName;
 
+    @Column(name = "role_id")
+    @XmlElement(name = "role_id", required = true)
+
+    private Integer roleId;
+
+
+    @Column(name = "dtype")
+    @XmlElement(name = "dtype", required = true)
+
+    private String dtype;
+
 }

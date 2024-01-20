@@ -1,4 +1,4 @@
-package ru.kata.rest;
+package ru.kata.rest.token;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;

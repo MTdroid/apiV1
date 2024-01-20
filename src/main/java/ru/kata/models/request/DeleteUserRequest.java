@@ -1,4 +1,4 @@
-package ru.kata.models.adminUserRestController.deleteUserById;
+package ru.kata.models.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

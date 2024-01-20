@@ -1,4 +1,4 @@
-package ru.kata.models.adminUserRestController.addUser;
+package ru.kata.models.response;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,18 +7,18 @@ import ru.kata.entity.adminUserRestController.RoleTable;
 
 @Data
 @EqualsAndHashCode
-public class AddUserResponse {
+public class GetAddEditUserResponse {
 
-    private Integer id;
-    private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String birthday;
-    private Boolean enabled;
-    private RoleTable role;
-    private Boolean imageFromSlack;
-    private Boolean isViewReport;
     private String avatarUrl;
+    private String birthday;
+    private String email;
+    private Boolean enabled;
+    private String firstName;
+    private Integer id;
+    private Boolean imageFromSlack;
     private Inactivation inactivation;
+    private Boolean isViewReport;
+    private String lastName;
+    private String password;
+    private RoleTable role;
 }
