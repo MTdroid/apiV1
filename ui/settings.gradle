@@ -1,3 +1,5 @@
 rootProject.name = 'ui'
 include 'test'
+include 'src'
+include 'src'
 
